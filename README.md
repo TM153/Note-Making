@@ -17,6 +17,8 @@ A comprehensive note-taking website that offers users an intuitive platform for 
 
 ## GUI
 
+![myNotes](https://github.com/TM153/Note-Making/blob/main/Images/myNotes.png)
+
 ![Retrieve_notes](https://github.com/TM153/Note-Making/blob/main/Images/Retrieve.png)
-![myNotes]((https://github.com/TM153/Note-Making/blob/main/Images/myNotes.png))
+
 ![Update_note](https://github.com/TM153/Note-Making/blob/main/Images/Update.png)
