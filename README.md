@@ -19,4 +19,4 @@ A comprehensive note-taking website that offers users an intuitive platform for 
 
 ![Retrieve_notes](https://github.com/TM153/Note-Making/blob/main/Images/Retrieve.png)
 ![myNotes]((https://github.com/TM153/Note-Making/blob/main/Images/myNotes.png))
-![Update_note](https://github.com/TM153/Healthcare-System/assets/124417858/0f04e85f-c5ea-46e0-be95-3151e0702f01)
+![Update_note](https://github.com/TM153/Note-Making/blob/main/Images/Update.png)
