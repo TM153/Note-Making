@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOTES</title>
+    <style>
+        .outer {
+            display: flex;
+            gap: 20px;
+            background-color: darkgoldenrod;
+        }
+
+        body {
+            background-color: darkgoldenrod;
+        }
+
+        .left-col {
+            width: 30%;
+            background-color: darkslategray;
+        }
+
+        .right-col {
+            width: 70%;
+            background-color: darkslategray;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="datetime-local"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+
+        }
+
+        h1,
+        h2 {
+            color: white;
+            text-align: center;
+        }
+
+        th,
+        td {
+            border: 1px solid white;
+            padding: 10px;
+            text-align: center;
+            color: white;
+
+        }
+
+        .submit {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="outer">
+
+        <div class="left-col">
+
+            <div class="create">
+                <h1>CREATE A NOTE</h1>
+                <form action="/notes" method="post">
+                    <div>
+                        <table>
+                            <tr class="name">
+                                <th><label for="name">Enter the Title</label></th>
+                                <td><input class="input" type="text" id="name" name="name" required /></td>
+                            </tr>
+                            <tr class="note">
+                                <th><label for="note">Write a note</label></th>
+                                <td><textarea class="input" id="note" name="note" required></textarea></td>
+                            </tr>
+                            <tr class="due">
+                                <th><label for="due">Due Date</label></th>
+                                <td><input class="due" type="datetime-local" id="due" name="due_date" required /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="submit">
+                        <input class="submit" type="submit" value="ADD" />
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="retrieve">
+                <h1>RETRIEVE A NOTE</h1>
+                <form action="/retrieve" method="POST">
+                    <div>
+                        <table>
+                            <tr class="id">
+                                <th><label for="id">ID</label></th>
+                                <td> <input class="input" type="number" id="id" name="id" /></td>
+                            </tr>
+                            <tr class="name">
+                                <th><label for="title">Title</label></th>
+                                <td><input class="input" type="text" id="title" name="title" /></td>
+                            </tr>
+                            <tr class="due">
+                                <th> <label for="due_date">Due_Date</label></th>
+                                <td><input class="input" type="datetime-local" id="due_date" name="due_date" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="submit">
+                        <input class="submit" type="submit" value="RETRIEVE" />
+                    </div>
+                </form>
+            </div>
+            <div class="retrieved">
+                {% if retrieved %}
+                <table>
+                    <tr>
+                        <th>Note ID</th>
+                        <th>Title</th>
+                        <th>Note</th>
+                        <th>Due Date</th>
+                        <th>Deletion</th>
+                    </tr>
+                    {% for note in retrieved %}
+                    <tr>
+                        <td>{{ note.id }}</td>
+                        <td>{{ note.name }}</td>
+                        <td>{{ note.note }}</td>
+                        <td>{{ note.due_date }}</td>
+                        <td>
+                            <form action="/delete" method="POST">
+                                <input type="hidden" name="id" value="{{ note.id }}">
+                                <input class="submit" type="submit" value="DELETE">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+
+            <div class="edit">
+                <h1>UPDATE A NOTE</h1>
+                <form action="/edit" method="post">
+                    <table>
+                        <tr class="id">
+                            <th><label for="id">Enter the ID</label></th>
+                            <td><input type="number" class="input" name="id" id="id" required /></td>
+                        </tr>
+                    </table>
+                    <div class="submit">
+                        <input type="submit" class="submit" value="EDIT" />
+                    </div>
+                </form>
+            </div>
+            <div class="update">
+                {% if update %}
+                <form action="/update" method="post">
+
+                    <input type="hidden" name="id" value="{{ id }}">
+                    <table>
+                        <tr class="name">
+                            <th><label for="name">Title</label></th>
+                            <td><input class="input" type="text" id="name" name="name" value="{{ name }}" /></td>
+                        </tr>
+                        <tr class="note">
+                            <th><label for="note">Write a note</label></th>
+                            <td><textarea class="input" id="note" name="note">{{ note }}</textarea></td>
+                        </tr>
+                        <tr class="due">
+                            <th><label for="due">Due Date</label></th>
+                            <td><input class="due" type="datetime-local" id="due" name="due_date"
+                                    value="{{ due_date }}" /></td>
+                        </tr>
+                    </table>
+                    <div class="submit">
+                        <input class="submit" type="submit" value="UPDATE" />
+                    </div>
+                </form>
+                {%endif%}
+            </div>
+        </div>
+        <div class="right-col">
+            <div class="mynotes">
+                <h1>MY NOTES</h1>
+                <table>
+                    <tr>
+                        <th>Note ID</th>
+                        <th>Title</th>
+                        <th>Note</th>
+                        <th>Due Date</th>
+                        <th>Created_at</th>
+                        <th>Updated_at</th>
+                        <th>Deletion</th>
+                    </tr>
+                    {% for note in notes %}
+                    <tr>
+                        <td>{{ note.id }}</td>
+                        <td>{{ note.name }}</td>
+                        <td>{{ note.note }}</td>
+                        <td>{{ note.due_date }}</td>
+                        <td>{{ note.created_at }}</td>
+                        <td>{{ note.updated_at }}</td>
+                        <td>
+                            <form action="/delete" method="POST">
+                                <input type="hidden" name="id" value="{{ note.id }}">
+                                <input class="submit" type="submit" value="DELETE">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
